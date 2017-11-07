@@ -1,0 +1,22 @@
+{
+  "name": "ProgressHUD",
+  "version": "0.1.0",
+  "summary": "A short description of ProgressHUD.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/ming/ProgressHUD",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "ming": "xiaoming.zhao@mljr.com"
+  },
+  "source": {
+    "git": "https://github.com/ming/ProgressHUD.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "ProgressHUD/Classes/**/*"
+}
