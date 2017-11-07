@@ -1,6 +1,6 @@
 import UIKit
 import XCTest
-import ProgressHUD
+import XProgressHUD
 
 class Tests: XCTestCase {
     

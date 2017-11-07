@@ -1,16 +1,16 @@
 PODS:
-  - ProgressHUD (0.1.0)
+  - XProgressHUD (0.1.0)
 
 DEPENDENCIES:
-  - ProgressHUD (from `../`)
+  - XProgressHUD (from `../`)
 
 EXTERNAL SOURCES:
-  ProgressHUD:
+  XProgressHUD:
     :path: ../
 
 SPEC CHECKSUMS:
-  ProgressHUD: c3a4f28cef8bbad8660479812035dd6238962888
+  XProgressHUD: ef22dd986b4dc4ad737da60db48c5dae6919ac09
 
-PODFILE CHECKSUM: 3e757177adbf164b12e1cd7e41369a823c2bba1e
+PODFILE CHECKSUM: 0f097960ee6d2ff17bffa9321fb13c7b60d5ca29
 
 COCOAPODS: 1.3.1

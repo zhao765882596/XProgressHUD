@@ -1,9 +1,9 @@
-# ProgressHUD
+# XProgressHUD
 
-[![CI Status](http://img.shields.io/travis/ming/ProgressHUD.svg?style=flat)](https://travis-ci.org/ming/ProgressHUD)
-[![Version](https://img.shields.io/cocoapods/v/ProgressHUD.svg?style=flat)](http://cocoapods.org/pods/ProgressHUD)
-[![License](https://img.shields.io/cocoapods/l/ProgressHUD.svg?style=flat)](http://cocoapods.org/pods/ProgressHUD)
-[![Platform](https://img.shields.io/cocoapods/p/ProgressHUD.svg?style=flat)](http://cocoapods.org/pods/ProgressHUD)
+[![CI Status](http://img.shields.io/travis/ming/XProgressHUD.svg?style=flat)](https://travis-ci.org/ming/XProgressHUD)
+[![Version](https://img.shields.io/cocoapods/v/XProgressHUD.svg?style=flat)](http://cocoapods.org/pods/XProgressHUD)
+[![License](https://img.shields.io/cocoapods/l/XProgressHUD.svg?style=flat)](http://cocoapods.org/pods/XProgressHUD)
+[![Platform](https://img.shields.io/cocoapods/p/XProgressHUD.svg?style=flat)](http://cocoapods.org/pods/XProgressHUD)
 
 ## Example
 
@@ -13,11 +13,11 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-ProgressHUD is available through [CocoaPods](http://cocoapods.org). To install
+XProgressHUD is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'ProgressHUD'
+pod 'XProgressHUD'
 ```
 
 ## Author
@@ -26,4 +26,4 @@ ming, xiaoming.zhao@mljr.com
 
 ## License
 
-ProgressHUD is available under the MIT license. See the LICENSE file for more info.
+XProgressHUD is available under the MIT license. See the LICENSE file for more info.

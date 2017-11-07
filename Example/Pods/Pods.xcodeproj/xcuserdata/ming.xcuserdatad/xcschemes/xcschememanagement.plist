@@ -4,17 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-ProgressHUD_Example.xcscheme</key>
+		<key>Pods-XProgressHUD_Example.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-ProgressHUD_Tests.xcscheme</key>
+		<key>Pods-XProgressHUD_Tests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>ProgressHUD.xcscheme</key>
+		<key>XProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
