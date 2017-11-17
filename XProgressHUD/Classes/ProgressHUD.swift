@@ -98,7 +98,7 @@ public class ProgressHUD: UIView {
         }
     }
 
-    public var isSquare = true {
+    public var isSquare = false {
         didSet {
             if oldValue != isSquare {
                 setNeedsUpdateConstraints()
@@ -177,7 +177,6 @@ public class ProgressHUD: UIView {
     @discardableResult
     public class func showHUD(forView: UIView? = nil, animated: Bool = true) -> ProgressHUD? {
         var view = forView
-
         if view == nil {
             view = UIApplication.shared.keyWindow
         }
@@ -199,8 +198,11 @@ public class ProgressHUD: UIView {
     }
     @discardableResult
     public class func HUD(forView: UIView? = nil) -> ProgressHUD? {
-
-        if forView != nil {
+        var view = forView
+        if view == nil {
+            view = UIApplication.shared.keyWindow
+        }
+        if view != nil {
             for subView in forView!.subviews {
                 if subView is ProgressHUD {
                     return subView as? ProgressHUD
@@ -517,7 +519,7 @@ extension ProgressHUD {
         bottomSpacer.removeConstraints(bottomSpacer.constraints)
         if bezelConstraints.count > 0 {
             bezelView.removeConstraints(bezelConstraints)
-            bezelConstraints = []
+            bezelConstraints.removeAll()
         }
         var centeringConstraints: Array<NSLayoutConstraint> = []
         centeringConstraints.append(NSLayoutConstraint.init(item: bezelView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: offset.x))
@@ -526,8 +528,8 @@ extension ProgressHUD {
         apply(priority: UILayoutPriority(rawValue: 998.0), constraints: centeringConstraints)
         addConstraints(centeringConstraints)
 
-        var sideConstraints: Array<NSLayoutConstraint> = NSLayoutConstraint.constraints(withVisualFormat: "|-(>=margin)-[bezel]-(>=margin)-|", options: NSLayoutFormatOptions.alignAllTop, metrics: ["margin": self.margin], views: ["bezel" : bezelView])
-        sideConstraints.hub_append(array: NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=margin)-[bezel]-(>=margin)-|", options: NSLayoutFormatOptions.alignAllTop, metrics: ["margin": self.margin], views: ["bezel" : bezelView]))
+        var sideConstraints: Array<NSLayoutConstraint> = NSLayoutConstraint.constraints(withVisualFormat: "|-(>=margin)-[bezel]-(>=margin)-|", options: NSLayoutFormatOptions.init(rawValue: 0), metrics: ["margin": self.margin], views: ["bezel" : bezelView])
+        sideConstraints.hub_append(array: NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=margin)-[bezel]-(>=margin)-|", options: NSLayoutFormatOptions.init(rawValue: 0), metrics: ["margin": self.margin], views: ["bezel" : bezelView]))
         apply(priority: UILayoutPriority(rawValue: 999.0), constraints: sideConstraints)
         addConstraints(sideConstraints)
 
@@ -574,8 +576,8 @@ extension ProgressHUD {
         for padding in paddingConstraints {
             let firstView = padding.firstItem as? UIView
             let secondView = padding.secondItem as? UIView
-            let firstVisible = firstView?.isHidden == false && firstView?.intrinsicContentSize == CGSize.zero
-            let secondVisible = secondView?.isHidden == false && secondView?.intrinsicContentSize == CGSize.zero
+            let firstVisible = firstView?.isHidden == false && !(firstView?.intrinsicContentSize == CGSize.zero)
+            let secondVisible = secondView?.isHidden == false && !(secondView?.intrinsicContentSize == CGSize.zero)
 
             padding.constant = firstVisible && (secondVisible || hasVisibleAncestors) ? 4.0 : 0.0
             hasVisibleAncestors = (hasVisibleAncestors || secondVisible )
