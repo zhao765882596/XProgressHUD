@@ -11,18 +11,61 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
-## Installation
+`XProgressHUD` works on iOS 8+ and swift 4.0.
 
-XProgressHUD is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+## Adding XProgressHUD to your project
 
-```ruby
-pod 'XProgressHUD'
+### CocoaPods
+
+[CocoaPods](http://cocoapods.org) is the recommended way to add MBProgressHUD to your project.
+
+1. Add a pod entry for XProgressHUD to your Podfile `pod 'XProgressHUD'`
+2. Install the pod(s) by running `pod install`.
+3. Include XProgressHUD wherever you need it with `import XProgressHUD`.
+
+
+### Source files
+
+Alternatively you can directly add the `XProgressHUD.swift`  to your project.
+
+## Usage
+
+The main guideline you need to follow when dealing with MBProgressHUD while running long-running tasks is keeping the main thread work-free, so the UI can be updated promptly. The recommended way of using MBProgressHUD is therefore to set it up on the main thread and then spinning the task, that you want to perform, off onto a new thread.
+
+```swift
+ProgressHUD.showHUD(forView: self.view, animated: true)
+DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 10) {
+    ProgressHUD.hideHUD(forView: self.view, animated: true)
+}
+
 ```
+
+If you need to configure the HUD you can do this by using the XProgressHUD reference that showHUDAddedTo:animated: returns.
+
+```swift
+let hub = ProgressHUD.showHUD(forView: self.view, animated: true)
+hub?.label.text = "加载中"
+DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 10) {
+ProgressHUD.hideHUD(forView: self.view, animated: true)
+}
+```
+
+You can also use a `NSProgress` object and MBProgressHUD will update itself when there is progress reported through that object.
+
+```swift
+let hub = ProgressHUD.showHUD(forView: self.scrollView, animated: true)
+hub?.mode = .determinate
+hub?.label.text = "加载中..."
+hub?.detailsLabel.text = "(1/2)"
+hud?.progressObject = progress;
+```
+
+You should be aware that any HUD updates issued inside the above block won't be displayed until the block completes.
+
 
 ## Author
 
-ming, xiaoming.zhao@mljr.com
+ming, z4015@qq.com
 
 ## License
 
