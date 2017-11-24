@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'XProgressHUD'
-  s.version          = '0.2'
+  s.version          = '0.3'
   s.summary          = 'MBProgressHUD swift imitative'
 
 # This description is used to generate tags and improve search results.

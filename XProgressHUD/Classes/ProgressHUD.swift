@@ -205,7 +205,10 @@ public class ProgressHUD: UIView {
         if view != nil {
             for subView in forView!.subviews {
                 if subView is ProgressHUD {
-                    return subView as? ProgressHUD
+                    let hud = subView as? ProgressHUD
+                    if hud?.hasFinished == false {
+                        return hud
+                    }
                 }
             }
         }
@@ -229,40 +232,37 @@ public class ProgressHUD: UIView {
     }
 
     public func show(animated: Bool = true) {
-        DispatchQueue.main.async {
-            self.minShowTimer?.invalidate()
-            self.minShowTimer = nil
-            self.isUseAnimation = animated
-            if self.graceTime > 0.0 {
-                self.graceTimer = Timer.init(timeInterval: self.graceTime, target: self, selector: #selector(self.handleGraceTimer(timer:)), userInfo: nil, repeats: false)
-                RunLoop.current.add(self.graceTimer!, forMode: RunLoopMode.commonModes)
-            } else {
-                self.show(usingAnimation: self.isUseAnimation)
-            }
+        assert(Thread.isMainThread, "ProgressHUD needs to be accessed on the main thread.")
+        self.minShowTimer?.invalidate()
+        self.minShowTimer = nil
+        self.isUseAnimation = animated
+        if self.graceTime > 0.0 {
+            self.graceTimer = Timer.init(timeInterval: self.graceTime, target: self, selector: #selector(self.handleGraceTimer(timer:)), userInfo: nil, repeats: false)
+            RunLoop.current.add(self.graceTimer!, forMode: RunLoopMode.commonModes)
+        } else {
+            self.show(usingAnimation: self.isUseAnimation)
         }
     }
     public func hide(animated: Bool = true, afterDelay: TimeInterval = 0.0) {
-        DispatchQueue.main.async {
-            if afterDelay <= 0.0 {
-                self.graceTimer?.invalidate()
-                self.graceTimer = nil
-                self.hasFinished = true
-                if self.minShowTime > 0 && self.showStarted != nil {
-                    let interv = Date().timeIntervalSince(self.showStarted!)
-                    if interv < self.minShowTime {
-                        self.minShowTimer = Timer.init(timeInterval: self.minShowTime - interv, target: self, selector: #selector(self.handleMinShowTimer(timer:)), userInfo: nil, repeats: false)
-                        RunLoop.current.add(self.minShowTimer!, forMode: RunLoopMode.commonModes)
-                    }
-                } else {
-                    self.hide(usingAnimation: self.isUseAnimation)
+        assert(Thread.isMainThread, "ProgressHUD needs to be accessed on the main thread.")
+        if afterDelay <= 0.0 {
+            self.graceTimer?.invalidate()
+            self.graceTimer = nil
+            self.hasFinished = true
+            if self.minShowTime > 0 && self.showStarted != nil {
+                let interv = Date().timeIntervalSince(self.showStarted!)
+                if interv < self.minShowTime {
+                    self.minShowTimer = Timer.init(timeInterval: self.minShowTime - interv, target: self, selector: #selector(self.handleMinShowTimer(timer:)), userInfo: nil, repeats: false)
+                    RunLoop.current.add(self.minShowTimer!, forMode: RunLoopMode.commonModes)
                 }
             } else {
-                self.hideDelayTimer = Timer.init(timeInterval: afterDelay, target: self, selector: #selector(self.handleHideTimer(timer:)), userInfo: animated, repeats: false)
-                RunLoop.current.add(self.hideDelayTimer!, forMode: RunLoopMode.commonModes)
+                self.hide(usingAnimation: self.isUseAnimation)
             }
+        } else {
+            self.hideDelayTimer = Timer.init(timeInterval: afterDelay, target: self, selector: #selector(self.handleHideTimer(timer:)), userInfo: animated, repeats: false)
+            RunLoop.current.add(self.hideDelayTimer!, forMode: RunLoopMode.commonModes)
         }
     }
-
 }
 extension ProgressHUD {
 // MARK: - timer
